@@ -10,7 +10,7 @@ Exported data is compatible with standard computer vision and ML frameworks like
 
 
 It is quite minimal in scope. Some benefits of this tool are:
-- (aforementioned) decoupling from data storage. This helps collaboration: pass a config to a colleague and ask them to label another bbox.
+- (aforementioned) decoupling from data storage. This helps collaboration: pass a config to a colleague and ask them to label another bbox on their local instance.
 - ML/analysis-ready export formats. (It's also probably easy to ask Claude to modify this to support more formats if you'd like.)
 
 Things this tool doesn't try to be good at:
@@ -18,7 +18,7 @@ Things this tool doesn't try to be good at:
 - Complex attribute tagging
 
 Areas where this could be improved (feel free to contribute!):
-- Shared config setup for multiple users to annotate in parallel
+- Shared config setup for multiple users to annotate in parallel from the same deployment
 - More export formats
 - Pixel-level annotation
 
