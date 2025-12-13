@@ -29,7 +29,7 @@ Exported data is compatible with standard computer vision and ML frameworks like
 # If uv not installed:
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# If pnpm not installed
+# If pnpm not installed:
 curl -fsSL https://get.pnpm.io/install.sh | sh
 
 # Clone repo
