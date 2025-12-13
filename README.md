@@ -1,6 +1,6 @@
 # Label geospatial data with tile servers
 
-`label-tiles` is a small open source tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map).
+`label-tiles` is a small open source tool to label bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map).
 
 You can draw bounding boxes on tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre and developed at [Earthscale](https://www.earthscale.ai/).
 
@@ -91,15 +91,15 @@ Things this tool doesn't try to be good at:
 
 Areas where this could be improved (feel free to contribute!):
 
-- Shared config setup for multiple users to annotate in parallel from the same deployment
+- Shared config setup for multiple users to label in parallel from the same deployment
 - More export formats
-- Pixel-level annotation
+- Pixel-level labeling
 
 ### Comparisons to other tools
 
-**QGIS**: Supports tile server viz but requires more setup and manual export to ML formats. Better for complex GIS workflows, but complex for simple bounding box annotation. Doesn't support tile export.
+**QGIS**: Supports tile server viz but requires more setup and manual export to ML formats. Better for complex GIS workflows, but complex for simple bounding box labeling. Doesn't support tile export.
 
-**Roboflow**: Cloud-based annotation platform optimized for ML workflows. Requires uploading data and works best with non-geospatial images. Good for teams needing cloud collaboration and QA features.
+**Roboflow**: Cloud-based labeling platform optimized for ML workflows. Requires uploading data and works best with non-geospatial images. Good for teams needing cloud collaboration and QA features.
 
 **`label-tiles`** is good when you have easy access to tile servers and want ML-ready exports without heavy data transfer.
 

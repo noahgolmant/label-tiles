@@ -1,7 +1,7 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "Annotate bounding boxes for geospatial datasets"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
