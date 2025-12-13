@@ -21,8 +21,6 @@ Exported data is compatible with standard computer vision and ML frameworks like
 - Python 3.12+ with [uv](https://github.com/astral-sh/uv)
 - [pnpm](https://pnpm.io/)
 
-![AnnoTile Demo](assets/annotile-demo.gif)
-
 ## Quick Start
 
 ```bash
