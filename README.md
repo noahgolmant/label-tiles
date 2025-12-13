@@ -1,26 +1,12 @@
 # Annotate geospatial data with tile servers
 
-AnnoTile is a small tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map). 
+AnnoTile is a small tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map).
 
 You can draw bounding boxes on tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre.
 
 Exported data is compatible with standard computer vision and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
 
 ![AnnoTile Demo](assets/annotile-demo.gif)
-
-
-It is quite minimal in scope. Some benefits of this tool are:
-- (aforementioned) decoupling from data storage. This helps collaboration: pass a config to a colleague and ask them to label another bbox on their local instance.
-- ML/analysis-ready export formats. (It's also probably easy to ask Claude to modify this to support more formats if you'd like.)
-
-Things this tool doesn't try to be good at:
-- Advanced QA/QC workflows
-- Complex attribute tagging
-
-Areas where this could be improved (feel free to contribute!):
-- Shared config setup for multiple users to annotate in parallel from the same deployment
-- More export formats
-- Pixel-level annotation
 
 ## Features
 
@@ -35,29 +21,27 @@ Areas where this could be improved (feel free to contribute!):
 - Python 3.12+ with [uv](https://github.com/astral-sh/uv)
 - Node.js 20+
 
-## Setup
+![AnnoTile Demo](assets/annotile-demo.gif)
 
-### Backend
-
-```bash
-cd backend
-uv sync
-uv run uvicorn main:app --reload --port 8000
-```
-
-### Frontend
+## Quick Start
 
 ```bash
-cd frontend
-npm install
-npm run dev
+make install && make dev
 ```
 
-The frontend runs at http://localhost:5173 and the backend API at http://localhost:8000.
+This will install all dependencies and start both the backend and frontend servers. The frontend runs at http://localhost:5173 and the backend API at http://localhost:8000.
+
+### Example tile server
+
+Try it out on Esri's `World_Imagery` layer:
+
+```
+https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
+```
 
 ### Tile Server Backends
 
-If you need to stand up tile servers, there are a few options available:
+If you need custom tile servers for various data formats, here are some options:
 
 #### Open Source
 
@@ -71,6 +55,41 @@ If you need to stand up tile servers, there are a few options available:
 - [Mapbox](https://www.mapbox.com/maps/): Raster tile hosting, global mapping API with commercial plans.
 - [Esri](https://www.esri.com/): Offers a variety of servers and tile services for ArcGIS ecosystem users.
 - [Google Earth Engine](https://earthengine.google.com/): you can use `ee.Image.getMap()` to get a temporary tile server URL for any given EE image.
+
+### Detailed Makefile Commands
+
+- `make install` or `make setup` - Install all dependencies (backend and frontend)
+- `make dev` - Start both backend and frontend in development mode
+- `make backend` - Start backend server only
+- `make frontend` - Start frontend dev server only
+- `make clean` - Clean build artifacts and dependencies
+- `make help` - Show all available commands
+
+## Scope
+
+It is quite minimal in scope. Some benefits of this tool are:
+
+- (aforementioned) decoupling from data storage. This helps collaboration: pass a config to a colleague and ask them to label another bbox on their local instance.
+- ML/analysis-ready export formats. (It's also probably easy to ask Claude to modify this to support more formats if you'd like.)
+
+Things this tool doesn't try to be good at:
+
+- Advanced QA/QC workflows
+- Complex attribute tagging
+
+Areas where this could be improved (feel free to contribute!):
+
+- Shared config setup for multiple users to annotate in parallel from the same deployment
+- More export formats
+- Pixel-level annotation
+
+### Comparisons to other tools
+
+**QGIS**: Supports tile server viz but requires more setup and manual export to ML formats. Better for complex GIS workflows, but complex for simple bounding box annotation. Doesn't support tile export.
+
+**Roboflow**: Cloud-based annotation platform optimized for ML workflows. Requires uploading data and works best with non-geospatial images. Good for teams needing cloud collaboration and QA features.
+
+**AnnoTile** is good when you have easy access to tile servers and want ML-ready exports without heavy data transfer.
 
 ## Usage
 
