@@ -82,8 +82,9 @@ If you need custom tile servers for various data formats, here are some options:
 
 It is quite minimal in scope. Some benefits of this tool are:
 
-- (aforementioned) decoupling from data storage. This helps collaboration: pass a config to a colleague and ask them to label another bbox on their local instance.
-- ML/analysis-ready export formats. (It's also probably easy to ask Claude to modify this to support more formats if you'd like.)
+- _Use what you have_: If you have an easy way to serve tiles for some data, you don't have to write additional code to label it.
+- _Collaboration_: pass a config to a colleague and ask them to label another bbox on their local instance.
+- _ML/analysis-ready export formats_ (It's also probably easy to ask Claude to modify this to support more formats if you'd like.)
 
 Things this tool doesn't try to be good at:
 
