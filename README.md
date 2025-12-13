@@ -1,10 +1,10 @@
 # Label geospatial data with tile servers
 
-`label-tiles` is a small open source tool for drawing labeled bounding boxes on map images from any [tile server](https://en.wikipedia.org/wiki/Tiled_web_map). It separates labeling from data storage, so you can label any raster data that can be served on a map.
+`label-tiles` is a small open source tool for _drawing labeled bounding boxes on map images from any [tile server](https://en.wikipedia.org/wiki/Tiled_web_map)_. It separates labeling from data storage, so you can label any raster data that can be served on a map.
 
-You can then export labels as GeoJSON, GeoParquet, or COCO JSON annotation format.
+You can then _export labels_ as GeoJSON, GeoParquet, or COCO JSON annotation format.
 
-You can also download the underlying tile images for ML training and inference.
+You can also _download the underlying tile images_ for ML training and inference.
 
 Exported data is compatible with standard computer vision and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
 
