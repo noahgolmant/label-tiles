@@ -2,7 +2,9 @@
 
 AnnoTile is a tool to label bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an XYZ tile server.
 
-You can draw bounding boxes on mercantile tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre. Exported data is compatible with standard computer vision tools and ML tools like `pytorch` and `ultralytics`.
+You can draw bounding boxes on mercantile tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre.
+
+Exported data is compatible with standard computer vision tools and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
 
 ## Features
 
