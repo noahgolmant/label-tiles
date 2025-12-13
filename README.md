@@ -1,8 +1,8 @@
 # Annotate geospatial data with tile servers
 
-AnnoTile is a small tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map).
+AnnoTile is a small open source tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map).
 
-You can draw bounding boxes on tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre.
+You can draw bounding boxes on tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre and developed at [Earthscale](https://www.earthscale.ai/).
 
 Exported data is compatible with standard computer vision and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
 
@@ -62,7 +62,7 @@ If you need custom tile servers for various data formats, here are some options:
 
 #### Proprietary
 
-- [Earthscale](https://earthscale.ai/): The company behind AnnoTile, serve from cloud raster mosaics (COGs, Zarr, STAC).
+- [Earthscale](https://earthscale.ai/): Managed tile servers for cloud raster mosaics (Tiled COGs, Zarr, STAC).
 - [Mapbox](https://www.mapbox.com/maps/): Raster tile hosting, global mapping API with commercial plans.
 - [Esri](https://www.esri.com/): Offers a variety of servers and tile services for ArcGIS ecosystem users.
 - [Google Earth Engine](https://earthengine.google.com/): you can use `ee.Image.getMap()` to get a temporary tile server URL for any given EE image.
