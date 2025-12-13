@@ -1,6 +1,6 @@
 # Label geospatial data with tile servers
 
-`label-tiles` is a small open source tool for _drawing labeled bounding boxes on map images from any [tile server](https://en.wikipedia.org/wiki/Tiled_web_map)_. It separates labeling from data storage, so you can label any raster data that can be served on a map.
+`label-tiles` is a small open source tool for \_drawing labeled bounding boxes on map images\* from any [tile server](https://en.wikipedia.org/wiki/Tiled_web_map). It separates labeling from data storage, so you can label any raster data that can be served on a map.
 
 You can then _export labels_ as GeoJSON, GeoParquet, or COCO JSON annotation format.
 
