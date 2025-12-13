@@ -1,25 +1,23 @@
-# Tile Labeling Application
+# AnnoTile: Label large-scale geospatial datasets with tile servers
 
-A React + FastAPI application for geospatial bounding box labeling with MapLibre. Draw bounding boxes on mercantile tiles and export labels as GeoJSON, COCO format, or download tile images.
+AnnoTile is a tool to label bounding boxes for geospatial datasets. Any dataset that can be served via an XYZ tile server can be labeled.
+
+You can draw bounding boxes on mercantile tiles and export labels as GeoJSON or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre. Exported data is compatible with standard computer vision tools and ML tools like `pytorch` and `ultralytics`.
 
 ## Features
 
 - Configure multiple tile server URLs with custom bounds, zoom levels, and tile sizes
-- MapLibre-based map with OSM basemap and configurable tile layers
-- Tile grid overlay at the labeling zoom level
-- Draw bounding boxes within tiles using click-drag
-- Hotkey-driven label assignment (1-9 for categories, N for negative/no objects)
-- Mark tiles as "no objects" (negative examples)
-- Labels persisted to GeoParquet format
-- Export to GeoJSON with bbox + tile indices
-- Export to COCO-format JSON for ML training
-- Download tile images with progress bar (multithreaded, skips existing)
-- UI state (viewport, active layers) persisted between sessions
+- Draw bounding boxes within tiles
+- Hotkey-driven label assignment for custom categories or negative examples
+- Persist labels to GeoParquet, GeoJSON, or COCO JSON for ML training
+- Download tiles over bounding boxes to build training datasets
 
 ## Prerequisites
 
 - Python 3.12+ with [uv](https://github.com/astral-sh/uv)
 - Node.js 20+
+
+![AnnoTile Demo](assets/annotile-demo.gif)
 
 ## Setup
 

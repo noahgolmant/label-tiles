@@ -19,6 +19,7 @@ export function ExportPanel({
     const [dataDirPath, setDataDirPath] = useState<string | null>(null);
     const [exportingGeoJSON, setExportingGeoJSON] = useState(false);
     const [exportingCOCO, setExportingCOCO] = useState(false);
+    const [useGeoBbox, setUseGeoBbox] = useState(true);
 
     const activeServer = tileServers.find((s) => activeLayers.includes(s.id));
 
@@ -31,7 +32,7 @@ export function ExportPanel({
     const handleExportGeoJSON = async () => {
         setExportingGeoJSON(true);
         try {
-            await api.exportGeoJSON();
+            await api.exportGeoJSON(useGeoBbox);
             setMessage("GeoJSON exported and saved to data directory");
             setTimeout(() => setExportingGeoJSON(false), 1000);
         } catch (err) {
@@ -163,12 +164,37 @@ export function ExportPanel({
                     <code>data/labels.geoparquet</code>
                 </div>
                 <div className="export-buttons">
-                    <button
-                        onClick={handleExportGeoJSON}
-                        disabled={downloading || exportingGeoJSON}
-                    >
-                        Export GeoJSON
-                    </button>
+                    <div className="geojson-export-group">
+                        <button
+                            onClick={handleExportGeoJSON}
+                            disabled={downloading || exportingGeoJSON}
+                        >
+                            Export GeoJSON
+                        </button>
+                        <div className="export-options">
+                            <div className="radio-group-label">
+                                GeoJSON coordinate format:
+                            </div>
+                            <label className="radio-label">
+                                <input
+                                    type="radio"
+                                    name="geojson-coords"
+                                    checked={useGeoBbox}
+                                    onChange={() => setUseGeoBbox(true)}
+                                />
+                                <span>Geographic coordinates (lat/lon)</span>
+                            </label>
+                            <label className="radio-label">
+                                <input
+                                    type="radio"
+                                    name="geojson-coords"
+                                    checked={!useGeoBbox}
+                                    onChange={() => setUseGeoBbox(false)}
+                                />
+                                <span>Relative to tile image coordinates</span>
+                            </label>
+                        </div>
+                    </div>
                     <button
                         onClick={handleExportCOCO}
                         disabled={downloading || exportingCOCO}

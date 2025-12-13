@@ -151,8 +151,11 @@ export async function deleteLabel(id: string): Promise<void> {
 
 // --- Export API ---
 
-export async function exportGeoJSON(): Promise<object> {
-    const res = await fetch(`${API_BASE}/export/geojson`);
+export async function exportGeoJSON(
+    useGeoBbox: boolean = true
+): Promise<object> {
+    const url = `${API_BASE}/export/geojson?use_geo_bbox=${useGeoBbox}`;
+    const res = await fetch(url);
     if (!res.ok) throw new Error("Failed to export GeoJSON");
     return res.json();
 }

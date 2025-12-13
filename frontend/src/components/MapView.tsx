@@ -357,7 +357,7 @@ export function MapView({
             style={{ width: "100%", height: "100%" }}
             mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
             minZoom={config.labeling_zoom - 6}
-            maxZoom={config.labeling_zoom + 3}
+            maxZoom={config.labeling_zoom + 4}
             onMoveEnd={handleMoveEnd}
             onMove={updateTileGrid}
             onLoad={updateTileGrid}

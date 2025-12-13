@@ -12,10 +12,11 @@ from fastapi.responses import StreamingResponse
 from morecantile import Tile
 from pydantic import BaseModel
 from sse_starlette.sse import EventSourceResponse
+from shapely.geometry import box
 
 from config import load_config
 from labels import load_labels
-from tile_downloader import download_tiles_with_progress, get_tiles_in_bbox
+from tile_downloader import download_tiles_with_progress, get_tiles_in_bbox, tile_to_bounds
 
 router = APIRouter()
 
@@ -42,9 +43,20 @@ class DownloadRequest(BaseModel):
 
 
 @router.get("/geojson")
-async def export_geojson():
+async def export_geojson(
+    use_geo_bbox: bool = Query(True, description="Use geographic bbox coordinates instead of pixel-relative coordinates"),
+    tile_size: Optional[int] = Query(None, description="Tile size in pixels (defaults to 512 if not provided)"),
+):
     """Export labels as GeoJSON with tile indices."""
     gdf = load_labels()
+    config = load_config()
+
+    # Get tile size from config or use default
+    if tile_size is None:
+        tile_size = 512  # Default tile size
+        # Try to get from config if available
+        if config.tile_servers:
+            tile_size = config.tile_servers[0].tile_size
 
     if len(gdf) == 0:
         geojson_data = {
@@ -62,9 +74,26 @@ async def export_geojson():
             elif not isinstance(pixel_bbox, list):
                 pixel_bbox = list(pixel_bbox)
             
+            # Determine geometry based on use_geo_bbox flag
+            if use_geo_bbox:
+                # Use geo_bounds directly - this is the geographic bbox of the drawn bbox
+                # geo_bounds is [west, south, east, north] in geographic coordinates
+                geo_bounds = row["geo_bounds"]
+                if hasattr(geo_bounds, 'tolist'):
+                    geo_bounds = geo_bounds.tolist()
+                elif not isinstance(geo_bounds, list):
+                    geo_bounds = list(geo_bounds)
+                
+                # Create bbox geometry from geo_bounds
+                geo_bbox = box(*geo_bounds)
+                geometry = geo_bbox.__geo_interface__
+            else:
+                # Use existing geometry (which is already geographic from geo_bounds)
+                geometry = row["geometry"].__geo_interface__
+            
             feature = {
                 "type": "Feature",
-                "geometry": row["geometry"].__geo_interface__,
+                "geometry": geometry,
                 "properties": {
                     "id": str(row["id"]),
                     "tile_x": int(row["tile_x"]),
