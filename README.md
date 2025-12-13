@@ -1,14 +1,30 @@
 # Annotate geospatial data with tile servers
 
-AnnoTile is a small tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an XYZ tile server.
+AnnoTile is a small tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map). 
 
-You can draw bounding boxes on mercantile tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre.
+You can draw bounding boxes on tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre.
 
-Exported data is compatible with standard computer vision tools and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
+Exported data is compatible with standard computer vision and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
+
+![AnnoTile Demo](assets/annotile-demo.gif)
+
+
+It is quite minimal in scope. Some benefits of this tool are:
+- (aforementioned) decoupling from data storage. This helps collaboration: pass a config to a colleague and ask them to label another bbox.
+- ML/analysis-ready export formats. (It's also probably easy to ask Claude to modify this to support more formats if you'd like.)
+
+Things this tool doesn't try to be good at:
+- Advanced QA/QC workflows
+- Complex attribute tagging
+
+Areas where this could be improved (feel free to contribute!):
+- Shared config setup for multiple users to annotate in parallel
+- More export formats
+- Pixel-level annotation
 
 ## Features
 
-- Configure multiple tile server URLs with custom bounds, zoom levels, and tile sizes
+- Configure multiple tile server URLs
 - Draw bounding boxes within tiles
 - Hotkey-driven label assignment for custom categories or negative examples
 - Persist labels to GeoParquet, GeoJSON, or COCO JSON for ML training
@@ -18,8 +34,6 @@ Exported data is compatible with standard computer vision tools and ML framework
 
 - Python 3.12+ with [uv](https://github.com/astral-sh/uv)
 - Node.js 20+
-
-![AnnoTile Demo](assets/annotile-demo.gif)
 
 ## Setup
 
