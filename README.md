@@ -1,6 +1,6 @@
-# AnnoTile: Annotate large-scale geospatial datasets with tile servers
+# Annotate geospatial data with tile servers
 
-AnnoTile is a tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an XYZ tile server.
+AnnoTile is a small tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an XYZ tile server.
 
 You can draw bounding boxes on mercantile tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre.
 
