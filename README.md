@@ -2,7 +2,7 @@
 
 AnnoTile is a tool to label bounding boxes for geospatial datasets. It decoules labeling from data storage. You can label any dataset that can be served by an XYZ tile server.
 
-You can draw bounding boxes on mercantile tiles and export labels as GeoJSON or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre. Exported data is compatible with standard computer vision tools and ML tools like `pytorch` and `ultralytics`.
+You can draw bounding boxes on mercantile tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre. Exported data is compatible with standard computer vision tools and ML tools like `pytorch` and `ultralytics`.
 
 ## Features
 
@@ -43,13 +43,13 @@ The frontend runs at http://localhost:5173 and the backend API at http://localho
 
 If you need to stand up tile servers, there are a few options available:
 
-#### Open Source Tile Servers
+#### Open Source
 
 - [TiTiler](https://developmentseed.org/titiler/): Lightweight XYZ dynamic tiling for Cloud Optimized GeoTIFFs and other raster sources.
 - [GeoServer](https://geoserver.org/): Supports serving vector and raster data using standard web protocols (WMS, WMTS, WFS, XYZ, etc).
 - [xpublish](https://github.com/xpublish-community/xpublish): Built on Xarray for serving scientific (multi-dimensional) datasets. Useful for tiled access to netCDF or Zarr.
 
-#### Proprietary Tile Servers
+#### Proprietary
 
 - [Earthscale](https://earthscale.ai/): The company behind AnnoTile, serve from cloud raster mosaics (COGs, Zarr, STAC).
 - [Mapbox](https://www.mapbox.com/maps/): Raster tile hosting, global mapping API with commercial plans.
