@@ -8,6 +8,8 @@ You can also download the underlying tile images for ML training and inference.
 
 Exported data is compatible with standard computer vision and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
 
+For context, a **tile server** is an API that delivers map images in small square "tiles" based on zoom level and location, letting map applications efficiently load and display only the relevant portions of very large datasets.
+
 This is built with React + FastAPI + MapLibre and developed at [Earthscale](https://www.earthscale.ai/).
 
 ![Demo](assets/annotile-demo.gif)
