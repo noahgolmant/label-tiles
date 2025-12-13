@@ -287,7 +287,7 @@ function App() {
         <div className="app">
             {/* Header */}
             <header className="header">
-                <h1>AnnoTile</h1>
+                <h1>Tile Labeler</h1>
                 <div className="header-controls">
                     <button onClick={() => setShowConfig(true)}>Config</button>
                     <button onClick={() => setShowExport(true)}>Export</button>

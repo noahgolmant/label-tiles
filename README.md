@@ -1,12 +1,12 @@
-# Annotate geospatial data with tile servers
+# Label geospatial data with tile servers
 
-AnnoTile is a small open source tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map).
+`label-tiles` is a small open source tool to annotate bounding boxes for geospatial datasets. It decouples labeling from data storage, since you can label any raster dataset that can be served by an [XYZ tile server](https://en.wikipedia.org/wiki/Tiled_web_map).
 
 You can draw bounding boxes on tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre and developed at [Earthscale](https://www.earthscale.ai/).
 
 Exported data is compatible with standard computer vision and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
 
-![AnnoTile Demo](assets/annotile-demo.gif)
+![Demo](assets/annotile-demo.gif)
 
 ## Features
 
@@ -31,8 +31,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh
 
 # Clone repo
-git clone https://github.com/noahgolmant/annotile/tree/main
-cd annotile
+git clone https://github.com/noahgolmant/label-tiles/tree/main
+cd label-tiles
 
 # Start web app & backend
 make install && make dev
@@ -101,7 +101,7 @@ Areas where this could be improved (feel free to contribute!):
 
 **Roboflow**: Cloud-based annotation platform optimized for ML workflows. Requires uploading data and works best with non-geospatial images. Good for teams needing cloud collaboration and QA features.
 
-**AnnoTile** is good when you have easy access to tile servers and want ML-ready exports without heavy data transfer.
+**`label-tiles`** is good when you have easy access to tile servers and want ML-ready exports without heavy data transfer.
 
 ## Usage
 
