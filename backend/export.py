@@ -19,7 +19,7 @@ from tile_downloader import download_tiles_with_progress, get_tiles_in_bbox
 
 router = APIRouter()
 
-DATA_DIR = Path("./data")
+DATA_DIR = Path(__file__).parent.parent / "data"
 TILES_DIR = DATA_DIR / "tiles"
 GEOJSON_FILE = DATA_DIR / "labels.geojson"
 COCO_FILE = DATA_DIR / "annotations.json"

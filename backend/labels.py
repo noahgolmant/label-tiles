@@ -13,7 +13,7 @@ from shapely.geometry import box
 
 router = APIRouter()
 
-DATA_DIR = Path("./data")
+DATA_DIR = Path(__file__).parent.parent / "data"
 LABELS_FILE = DATA_DIR / "labels.geoparquet"
 
 

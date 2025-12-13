@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 
 router = APIRouter()
 
-DATA_DIR = Path("./data")
+DATA_DIR = Path(__file__).parent.parent / "data"
 CONFIG_FILE = DATA_DIR / "config.json"
 UI_STATE_FILE = DATA_DIR / "ui_state.json"
 
