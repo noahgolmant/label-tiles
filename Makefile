@@ -12,7 +12,7 @@ install: ## Install all dependencies (backend and frontend)
 	@echo "Installing backend dependencies..."
 	cd backend && uv sync
 	@echo "Installing frontend dependencies..."
-	cd frontend && npm install
+	cd frontend && pnpm install
 	@echo "Setup complete!"
 
 dev: ## Start both backend and frontend in development mode
@@ -25,7 +25,7 @@ backend: ## Start backend server only
 
 frontend: ## Start frontend dev server only
 	@echo "Starting frontend dev server on http://localhost:5173"
-	cd frontend && npm run dev
+	cd frontend && pnpm run dev
 
 clean: ## Clean build artifacts and dependencies
 	@echo "Cleaning backend..."

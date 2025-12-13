@@ -19,21 +19,34 @@ Exported data is compatible with standard computer vision and ML frameworks like
 ## Prerequisites
 
 - Python 3.12+ with [uv](https://github.com/astral-sh/uv)
-- Node.js 20+
+- [pnpm](https://pnpm.io/)
 
 ![AnnoTile Demo](assets/annotile-demo.gif)
 
 ## Quick Start
 
 ```bash
+# If uv not installed:
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# If pnpm not installed
+curl -fsSL https://get.pnpm.io/install.sh | sh
+
+# Clone repo
+git clone https://github.com/noahgolmant/annotile/tree/main
+cd annotile
+
+# Start web app & backend
 make install && make dev
 ```
 
 This will install all dependencies and start both the backend and frontend servers. The frontend runs at http://localhost:5173 and the backend API at http://localhost:8000.
 
+Open http://localhost:5173 in your browser to start.
+
 ### Example tile server
 
-Try it out on Esri's `World_Imagery` layer:
+Try it out on Esri's `World_Imagery` layer. Click `Config` and add this server:
 
 ```
 https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
