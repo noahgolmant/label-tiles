@@ -2,9 +2,13 @@
 
 `label-tiles` is a small open source tool for drawing labeled bounding boxes on map images from any [tile server](https://en.wikipedia.org/wiki/Tiled_web_map). It separates labeling from data storage, so you can label any raster data that can be served on a map.
 
-You can draw bounding boxes on tiles and export labels as GeoJSON, GeoParquet, or COCO JSON annotation format. You can also download the underlying tile images for ML training and inference. This is built with React + FastAPI + MapLibre and developed at [Earthscale](https://www.earthscale.ai/).
+You can then export labels as GeoJSON, GeoParquet, or COCO JSON annotation format.
+
+You can also download the underlying tile images for ML training and inference.
 
 Exported data is compatible with standard computer vision and ML frameworks like `pytorch` and `ultralytics`. See the example in [`examples/dataloader.py`](examples/dataloader.py) for how to load the COCO annotation output in PyTorch.
+
+This is built with React + FastAPI + MapLibre and developed at [Earthscale](https://www.earthscale.ai/).
 
 ![Demo](assets/annotile-demo.gif)
 
