@@ -908,3 +908,202 @@ body {
     color: var(--text-primary) !important;
     font-family: var(--font-mono) !important;
 }
+
+/* GeoTIFF Drop Zone */
+.geotiff-dropzone-container {
+    margin-bottom: 1rem;
+}
+
+.geotiff-dropzone {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: var(--bg-tertiary);
+}
+
+.geotiff-dropzone:hover {
+    border-color: var(--accent-primary);
+    background: rgba(110, 231, 183, 0.05);
+}
+
+.geotiff-dropzone.dragging {
+    border-color: var(--accent-primary);
+    background: rgba(110, 231, 183, 0.1);
+    border-style: solid;
+}
+
+.geotiff-dropzone.registering {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropzone-icon {
+    font-size: 2rem;
+}
+
+.upload-spinner {
+    font-size: 1.5rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.path-toggle-btn {
+    padding: 0.25rem 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.path-toggle-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.geotiff-path-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.geotiff-path-input {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-family: monospace;
+}
+
+.geotiff-path-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.geotiff-path-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.geotiff-register-btn {
+    padding: 0.5rem 1rem;
+    background: var(--accent-secondary);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.geotiff-register-btn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.geotiff-register-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.geotiff-status {
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.geotiff-status.loading {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.geotiff-status.unavailable {
+    background: rgba(251, 191, 36, 0.1);
+    color: var(--accent-warning);
+    flex-wrap: wrap;
+}
+
+.geotiff-status.unavailable code {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-left: auto;
+}
+
+.geotiff-error {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 4px;
+    color: var(--accent-danger);
+    font-size: 0.875rem;
+}
+
+.uploaded-files {
+    margin-top: 0.75rem;
+}
+
+.uploaded-files h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.uploaded-file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.375rem 0.5rem;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    margin-bottom: 0.25rem;
+}
+
+.uploaded-file .file-name {
+    font-size: 0.8rem;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+}
+
+.uploaded-file .delete-btn {
+    flex-shrink: 0;
+}
+
+/* Server zoom info */
+.server-zoom {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}

@@ -17,6 +17,7 @@ This is built with React + FastAPI + MapLibre and developed at [Earthscale](http
 ## Features
 
 - Configure multiple tile server URLs
+- **Drag-and-drop GeoTIFF support** via optional [TiTiler](https://developmentseed.org/titiler/) integration
 - Draw bounding boxes within tiles
 - Hotkey-driven label assignment for custom categories or negative examples
 - Persist labels to GeoParquet, GeoJSON, or COCO JSON for ML training
@@ -56,6 +57,25 @@ Try it out on Esri's `World_Imagery` layer. Click `Config` and add this server:
 https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
 ```
 
+### Built-in GeoTIFF Support (TiTiler)
+
+You can **drag and drop a GeoTIFF file** directly into the Config panel to label it. This uses [TiTiler](https://developmentseed.org/titiler/) to dynamically serve tiles from your computer.
+
+To enable this feature, install the optional TiTiler dependencies:
+
+```bash
+make install-titiler
+```
+
+Then restart the backend. In the Config panel, you'll see a drop zone where you can:
+
+1. Drag and drop any GeoTIFF file (`.tif`, `.tiff`)
+2. The file is automatically uploaded and a tile server is created
+
+You can then label it and export tiled PNGs to 'chip' the TIFF for model training.
+
+**Note**: this uses a default TiTiler deployment, so it may require additional tuning to handle different file formats and visualization parameters.
+
 ### Tile Server Backends
 
 If you need custom tile servers for various data formats, here are some options:
@@ -76,6 +96,7 @@ If you need custom tile servers for various data formats, here are some options:
 ### Detailed Makefile Commands
 
 - `make install` or `make setup` - Install all dependencies (backend and frontend)
+- `make install-titiler` - Install TiTiler for drag-and-drop GeoTIFF support
 - `make dev` - Start both backend and frontend in development mode
 - `make backend` - Start backend server only
 - `make frontend` - Start frontend dev server only

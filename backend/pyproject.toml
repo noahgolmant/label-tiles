@@ -2,15 +2,24 @@
 name = "backend"
 version = "0.1.0"
 description = "Annotate bounding boxes for geospatial datasets"
-readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "aiohttp>=3.13.2",
     "fastapi>=0.124.4",
     "geopandas>=1.1.1",
-    "morecantile>=7.0.0",
+    "morecantile>=6.0.0",
     "pyarrow>=22.0.0",
     "pydantic>=2.12.5",
     "sse-starlette>=3.0.3",
     "uvicorn>=0.38.0",
 ]
+
+[project.optional-dependencies]
+titiler = [
+    "titiler.core>=0.18.0",
+    "python-multipart>=0.0.9",
+    "rasterio>=1.3.0",
+]
+
+[tool.setuptools]
+py-modules = ["main", "config", "labels", "export", "tile_downloader", "titiler_router"]

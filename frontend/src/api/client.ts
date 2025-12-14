@@ -1,4 +1,12 @@
-import type { Config, UIState, TileServer, Label, LabelCreate } from "../types";
+import type {
+    Config,
+    UIState,
+    TileServer,
+    Label,
+    LabelCreate,
+    GeoTiffInfo,
+    TitilerStatus,
+} from "../types";
 
 const API_BASE = "http://localhost:8000/api";
 
@@ -266,4 +274,50 @@ export function downloadAllTilesStream(
         });
 
     return () => controller.abort();
+}
+
+// --- TiTiler API ---
+
+export async function getTitilerStatus(): Promise<TitilerStatus> {
+    const res = await fetch(`${API_BASE.replace("/api", "")}/titiler/status`);
+    if (!res.ok) throw new Error("Failed to get TiTiler status");
+    return res.json();
+}
+
+export async function registerGeoTiff(path: string): Promise<GeoTiffInfo> {
+    const res = await fetch(
+        `${API_BASE.replace("/api", "")}/titiler/register`,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path }),
+        }
+    );
+
+    if (!res.ok) {
+        const error = await res
+            .json()
+            .catch(() => ({ detail: "Registration failed" }));
+        throw new Error(error.detail || "Failed to register GeoTIFF");
+    }
+    return res.json();
+}
+
+export async function listGeoTiffs(): Promise<{
+    geotiffs: GeoTiffInfo[];
+    titiler_available: boolean;
+}> {
+    const res = await fetch(`${API_BASE.replace("/api", "")}/titiler/geotiffs`);
+    if (!res.ok) throw new Error("Failed to list GeoTIFFs");
+    return res.json();
+}
+
+export async function deleteGeoTiff(fileId: string): Promise<void> {
+    const res = await fetch(
+        `${API_BASE.replace("/api", "")}/titiler/geotiffs/${fileId}`,
+        {
+            method: "DELETE",
+        }
+    );
+    if (!res.ok) throw new Error("Failed to delete GeoTIFF");
 }

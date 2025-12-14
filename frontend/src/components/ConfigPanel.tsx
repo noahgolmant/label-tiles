@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Config, TileServer } from "../types";
+import { GeoTiffDropZone } from "./GeoTiffDropZone";
 
 interface ConfigPanelProps {
     config: Config;
@@ -134,6 +135,10 @@ export function ConfigPanel({
 
             <div className="config-section">
                 <h3>Tile Servers</h3>
+
+                {/* GeoTIFF Drop Zone */}
+                <GeoTiffDropZone onAddTileServer={onAddTileServer} />
+
                 <div className="server-list">
                     {config.tile_servers.map((server) => (
                         <div key={server.id} className="server-item">

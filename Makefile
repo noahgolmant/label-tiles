@@ -1,4 +1,4 @@
-.PHONY: help setup install dev backend frontend clean
+.PHONY: help setup install install-titiler dev backend frontend clean
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
@@ -14,6 +14,11 @@ install: ## Install all dependencies (backend and frontend)
 	@echo "Installing frontend dependencies..."
 	cd frontend && pnpm install
 	@echo "Setup complete!"
+
+install-titiler: ## Install TiTiler for drag-and-drop GeoTIFF support
+	@echo "Installing TiTiler dependencies..."
+	cd backend && uv pip install -e ".[titiler]"
+	@echo "TiTiler setup complete! Restart the backend to enable GeoTIFF support."
 
 dev: ## Start both backend and frontend in development mode
 	@echo "Starting backend and frontend..."

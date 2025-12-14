@@ -82,3 +82,20 @@ export interface DrawingState {
     currentCorner: { lng: number; lat: number } | null;
     tile: TileInfo | null;
 }
+
+// TiTiler GeoTIFF info
+export interface GeoTiffInfo {
+    id: string;
+    filename: string;
+    path: string;
+    tile_url_template: string;
+    bounds: [number, number, number, number];
+    min_zoom: number;
+    max_zoom: number;
+}
+
+// TiTiler status
+export interface TitilerStatus {
+    available: boolean;
+    message: string;
+}
