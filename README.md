@@ -74,7 +74,9 @@ Then restart the backend. In the Config panel, you'll see a drop zone where you 
 
 You can then label it and export tiled PNGs to 'chip' the TIFF for model training.
 
-**Note**: this uses a default TiTiler deployment, so it may require additional tuning to handle different file formats and visualization parameters.
+**Note**: Some browsers don't support drag and drop, in which case you have to write the full path to the file.
+
+**Second Note**: this uses a default TiTiler deployment, so it may require additional tuning to handle different file formats and visualization parameters.
 
 ### Tile Server Backends
 
