@@ -12,7 +12,7 @@ For context, a **tile server** is an API that delivers map images in small squar
 
 This is built with React + FastAPI + MapLibre and developed at [Earthscale](https://www.earthscale.ai/).
 
-![Demo](assets/annotile-demo.gif)
+![Demo](assets/label-tiles.gif)
 
 ## Features
 
