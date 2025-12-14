@@ -17,11 +17,11 @@ This is built with React + FastAPI + MapLibre and developed at [Earthscale](http
 ## Features
 
 - Configure multiple tile server URLs
-- **Drag-and-drop GeoTIFF support** via optional [TiTiler](https://developmentseed.org/titiler/) integration
 - Draw bounding boxes within tiles
 - Hotkey-driven label assignment for custom categories or negative examples
 - Persist labels to GeoParquet, GeoJSON, or COCO JSON for ML training
 - Download tiles over bounding boxes to build training datasets
+- Drag-and-drop GeoTIFF support via optional [TiTiler](https://developmentseed.org/titiler/) integration
 
 ## Prerequisites
 
