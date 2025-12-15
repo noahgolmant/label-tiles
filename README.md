@@ -38,7 +38,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh
 
 # Clone repo
-git clone https://github.com/noahgolmant/label-tiles/tree/main
+git clone https://github.com/noahgolmant/label-tiles
 cd label-tiles
 
 # Start web app & backend
