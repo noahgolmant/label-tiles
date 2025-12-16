@@ -1,4 +1,11 @@
-import { useRef, useCallback, useEffect, useState } from "react";
+import {
+    useRef,
+    useCallback,
+    useEffect,
+    useState,
+    useImperativeHandle,
+    forwardRef,
+} from "react";
 import Map, {
     NavigationControl,
     ScaleControl,
@@ -17,6 +24,13 @@ import type {
     Viewport,
 } from "../types";
 import "maplibre-gl/dist/maplibre-gl.css";
+
+export interface MapViewHandle {
+    flyToBounds: (
+        bounds: [number, number, number, number],
+        zoomOffset?: number
+    ) => void;
+}
 
 // Tile math utilities
 function clampLat(lat: number): number {
@@ -87,21 +101,54 @@ interface MapViewProps {
     isNoneMode: boolean;
 }
 
-export function MapView({
-    config,
-    uiState,
-    labels,
-    onViewportChange,
-    drawingState,
-    onFirstClick,
-    onMouseMove: onDrawMouseMove,
-    onSecondClick,
-    selectedTile,
-    canDraw,
-    isNoneMode,
-}: MapViewProps) {
+export const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
+    {
+        config,
+        uiState,
+        labels,
+        onViewportChange,
+        drawingState,
+        onFirstClick,
+        onMouseMove: onDrawMouseMove,
+        onSecondClick,
+        selectedTile,
+        canDraw,
+        isNoneMode,
+    },
+    ref
+) {
     const mapRef = useRef<MapRef>(null);
     const [cursor, setCursor] = useState("grab");
+
+    // Expose flyToBounds method via ref
+    useImperativeHandle(ref, () => ({
+        flyToBounds: (
+            bounds: [number, number, number, number],
+            zoomOffset: number = 0
+        ) => {
+            if (!mapRef.current) return;
+
+            const map = mapRef.current.getMap();
+            const [west, south, east, north] = bounds;
+
+            // Use cameraForBounds to calculate the target viewport
+            const camera = map.cameraForBounds(
+                [
+                    [west, south],
+                    [east, north],
+                ],
+                { padding: 50 }
+            );
+
+            if (camera) {
+                map.flyTo({
+                    center: camera.center,
+                    zoom: (camera.zoom ?? 1) + zoomOffset,
+                    duration: 1000,
+                });
+            }
+        },
+    }));
 
     const handleMoveEnd = useCallback(
         (e: {
@@ -488,4 +535,4 @@ export function MapView({
             <ScaleControl position="bottom-left" />
         </Map>
     );
-}
+});

@@ -1,5 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { MapView } from "./components/MapView";
+import type { MapViewHandle } from "./components/MapView";
 import { ConfigPanel } from "./components/ConfigPanel";
 import { LayerToggle } from "./components/LayerToggle";
 import { LabelTable } from "./components/LabelTable";
@@ -35,6 +36,9 @@ function App() {
         getLabelsForTile,
     } = useLabels();
 
+    // Map ref for programmatic control
+    const mapRef = useRef<MapViewHandle>(null);
+
     // UI state
     const [showConfig, setShowConfig] = useState(false);
     const [showExport, setShowExport] = useState(false);
@@ -64,6 +68,14 @@ function App() {
             updateViewport(viewport);
         },
         [updateViewport]
+    );
+
+    // Handle GeoTIFF added - zoom to bounds
+    const handleGeoTiffAdded = useCallback(
+        (bounds: [number, number, number, number]) => {
+            mapRef.current?.flyToBounds(bounds, -0.5);
+        },
+        []
     );
 
     // First click - set first corner and start drawing, or mark tile as negative in None mode
@@ -299,6 +311,7 @@ function App() {
                 {/* Map area */}
                 <div className="map-container">
                     <MapView
+                        ref={mapRef}
                         config={config}
                         uiState={uiState}
                         labels={labels}
@@ -393,6 +406,8 @@ function App() {
                             onUpdateLabelingZoom={updateLabelingZoom}
                             onUpdateLabelingExtent={updateLabelingExtent}
                             onClose={() => setShowConfig(false)}
+                            onGeoTiffAdded={handleGeoTiffAdded}
+                            onToggleLayer={toggleLayer}
                         />
                     </div>
                 </div>

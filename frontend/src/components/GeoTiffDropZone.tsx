@@ -9,6 +9,8 @@ import {
 
 interface GeoTiffDropZoneProps {
     onAddTileServer: (server: Omit<TileServer, "id">) => Promise<TileServer>;
+    onGeoTiffAdded?: (bounds: [number, number, number, number]) => void;
+    onToggleLayer?: (id: string) => void;
 }
 
 // Extend File type for Electron's path property
@@ -16,7 +18,11 @@ interface FileWithPath extends File {
     path?: string;
 }
 
-export function GeoTiffDropZone({ onAddTileServer }: GeoTiffDropZoneProps) {
+export function GeoTiffDropZone({
+    onAddTileServer,
+    onGeoTiffAdded,
+    onToggleLayer,
+}: GeoTiffDropZoneProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [isRegistering, setIsRegistering] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -58,7 +64,7 @@ export function GeoTiffDropZone({ onAddTileServer }: GeoTiffDropZoneProps) {
                 ]);
 
                 // Auto-add as tile server
-                await onAddTileServer({
+                const server = await onAddTileServer({
                     name: geotiffInfo.filename,
                     url_template: geotiffInfo.tile_url_template,
                     bounds: geotiffInfo.bounds,
@@ -66,6 +72,12 @@ export function GeoTiffDropZone({ onAddTileServer }: GeoTiffDropZoneProps) {
                     max_zoom: geotiffInfo.max_zoom,
                     tile_size: 256,
                 });
+
+                // Turn on the layer
+                onToggleLayer?.(server.id);
+
+                // Notify parent to zoom to bounds
+                onGeoTiffAdded?.(geotiffInfo.bounds);
             } catch (err) {
                 setError(
                     err instanceof Error ? err.message : "Registration failed"
@@ -74,7 +86,7 @@ export function GeoTiffDropZone({ onAddTileServer }: GeoTiffDropZoneProps) {
 
             setIsRegistering(false);
         },
-        [onAddTileServer]
+        [onAddTileServer, onGeoTiffAdded, onToggleLayer]
     );
 
     const handleDragOver = useCallback((e: React.DragEvent) => {
