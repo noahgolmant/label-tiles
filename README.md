@@ -19,7 +19,7 @@ This is built with React + FastAPI + MapLibre and developed at [Earthscale](http
 - Hotkey-driven label assignment for custom categories or negative examples
 - Persist labels to GeoParquet, GeoJSON, or COCO JSON for ML training
 - Download tiles over bounding boxes to build training datasets
-- Drag-and-drop GeoTIFF support via optional [TiTiler](https://developmentseed.org/titiler/) integration
+- Local GeoTIFF support via optional [TiTiler](https://developmentseed.org/titiler/) integration
 
 ## Prerequisites
 
@@ -57,7 +57,7 @@ https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/t
 
 ### Built-in GeoTIFF Support (TiTiler)
 
-You can **drag and drop a GeoTIFF file** directly into the Config panel to label it. This uses [TiTiler](https://developmentseed.org/titiler/) to dynamically serve tiles from your computer.
+You can load a **local GeoTIFF file** directly from the Config panel to label it. This uses [TiTiler](https://developmentseed.org/titiler/) to dynamically serve tiles from your computer.
 
 To enable this feature, install the optional TiTiler dependencies:
 
@@ -65,16 +65,11 @@ To enable this feature, install the optional TiTiler dependencies:
 make install-titiler
 ```
 
-Then restart the backend. In the Config panel, you'll see a drop zone where you can:
-
-1. Drag and drop any GeoTIFF file (`.tif`, `.tiff`)
-2. The file is automatically uploaded and a tile server is created
+Then restart the backend. In the Config panel, enter the full path to your GeoTIFF file (`.tif`, `.tiff`) and click "Add GeoTIFF". The file is automatically registered and a tile server is created.
 
 You can then label it and export tiled PNGs to 'chip' the TIFF for model training.
 
-**Note**: Some browsers don't support drag and drop, in which case you have to write the full path to the file.
-
-**Second Note**: this uses a default TiTiler deployment, so it may require additional tuning to handle different file formats and visualization parameters.
+**Note**: This uses a default TiTiler deployment, so it may require additional tuning to handle different file formats and visualization parameters.
 
 ### Tile Server Backends
 

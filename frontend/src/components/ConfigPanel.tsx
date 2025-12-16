@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Config, TileServer } from "../types";
-import { GeoTiffDropZone } from "./GeoTiffDropZone";
+import { GeoTiffInput } from "./GeoTiffInput";
 
 interface ConfigPanelProps {
     config: Config;
@@ -13,6 +13,8 @@ interface ConfigPanelProps {
         extent: [number, number, number, number] | null
     ) => Promise<void>;
     onClose: () => void;
+    onGeoTiffAdded?: (bounds: [number, number, number, number]) => void;
+    onToggleLayer?: (id: string) => void;
 }
 
 export function ConfigPanel({
@@ -24,6 +26,8 @@ export function ConfigPanel({
     onUpdateLabelingZoom,
     onUpdateLabelingExtent,
     onClose,
+    onGeoTiffAdded,
+    onToggleLayer,
 }: ConfigPanelProps) {
     const [newServerName, setNewServerName] = useState("");
     const [newServerUrl, setNewServerUrl] = useState("");
@@ -136,8 +140,12 @@ export function ConfigPanel({
             <div className="config-section">
                 <h3>Tile Servers</h3>
 
-                {/* GeoTIFF Drop Zone */}
-                <GeoTiffDropZone onAddTileServer={onAddTileServer} />
+                {/* GeoTIFF Input */}
+                <GeoTiffInput
+                    onAddTileServer={onAddTileServer}
+                    onGeoTiffAdded={onGeoTiffAdded}
+                    onToggleLayer={onToggleLayer}
+                />
 
                 <div className="server-list">
                     {config.tile_servers.map((server) => (
