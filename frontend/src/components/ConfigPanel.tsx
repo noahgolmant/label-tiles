@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Config, TileServer } from "../types";
-import { GeoTiffDropZone } from "./GeoTiffDropZone";
+import { GeoTiffInput } from "./GeoTiffInput";
 
 interface ConfigPanelProps {
     config: Config;
@@ -140,8 +140,8 @@ export function ConfigPanel({
             <div className="config-section">
                 <h3>Tile Servers</h3>
 
-                {/* GeoTIFF Drop Zone */}
-                <GeoTiffDropZone
+                {/* GeoTIFF Input */}
+                <GeoTiffInput
                     onAddTileServer={onAddTileServer}
                     onGeoTiffAdded={onGeoTiffAdded}
                     onToggleLayer={onToggleLayer}
