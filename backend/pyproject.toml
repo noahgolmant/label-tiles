@@ -8,6 +8,7 @@ dependencies = [
     "fastapi>=0.124.4",
     "geopandas>=1.1.1",
     "morecantile>=6.0.0",
+    "pillow>=11.0.0",
     "pyarrow>=22.0.0",
     "pydantic>=2.12.5",
     "sse-starlette>=3.0.3",

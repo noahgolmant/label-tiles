@@ -31,13 +31,13 @@ export function ConfigPanel({
 }: ConfigPanelProps) {
     const [newServerName, setNewServerName] = useState("");
     const [newServerUrl, setNewServerUrl] = useState("");
-    const [newServerTileSize, setNewServerTileSize] = useState(512);
+    const [newServerTileSize, setNewServerTileSize] = useState(256);
     const [newServerMinZoom, setNewServerMinZoom] = useState(0);
     const [newServerMaxZoom, setNewServerMaxZoom] = useState(22);
     const [editingServerId, setEditingServerId] = useState<string | null>(null);
     const [editServerName, setEditServerName] = useState("");
     const [editServerUrl, setEditServerUrl] = useState("");
-    const [editServerTileSize, setEditServerTileSize] = useState(512);
+    const [editServerTileSize, setEditServerTileSize] = useState(256);
     const [editServerMinZoom, setEditServerMinZoom] = useState(0);
     const [editServerMaxZoom, setEditServerMaxZoom] = useState(22);
     const [editServerBounds, setEditServerBounds] = useState<
@@ -60,7 +60,7 @@ export function ConfigPanel({
         });
         setNewServerName("");
         setNewServerUrl("");
-        setNewServerTileSize(512);
+        setNewServerTileSize(256);
         setNewServerMinZoom(0);
         setNewServerMaxZoom(22);
     };
@@ -79,7 +79,7 @@ export function ConfigPanel({
         setEditingServerId(null);
         setEditServerName("");
         setEditServerUrl("");
-        setEditServerTileSize(512);
+        setEditServerTileSize(256);
         setEditServerMinZoom(0);
         setEditServerMaxZoom(22);
         setEditServerBounds([-180, -85, 180, 85]);
@@ -174,7 +174,7 @@ export function ConfigPanel({
                                         value={editServerTileSize}
                                         onChange={(e) =>
                                             setEditServerTileSize(
-                                                parseInt(e.target.value) || 512
+                                                parseInt(e.target.value) || 256
                                             )
                                         }
                                         style={{ width: "80px" }}
@@ -296,7 +296,7 @@ export function ConfigPanel({
                         value={newServerTileSize}
                         onChange={(e) =>
                             setNewServerTileSize(
-                                parseInt(e.target.value) || 512
+                                parseInt(e.target.value) || 256
                             )
                         }
                         style={{ width: "80px" }}

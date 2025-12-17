@@ -45,7 +45,7 @@ class DownloadRequest(BaseModel):
 @router.get("/geojson")
 async def export_geojson(
     use_geo_bbox: bool = Query(True, description="Use geographic bbox coordinates instead of pixel-relative coordinates"),
-    tile_size: Optional[int] = Query(None, description="Tile size in pixels (defaults to 512 if not provided)"),
+    tile_size: Optional[int] = Query(None, description="Tile size in pixels (defaults to 256 if not provided)"),
 ):
     """Export labels as GeoJSON with tile indices."""
     gdf = load_labels()
@@ -53,7 +53,7 @@ async def export_geojson(
 
     # Get tile size from config or use default
     if tile_size is None:
-        tile_size = 512  # Default tile size
+        tile_size = 256  # Default tile size
         # Try to get from config if available
         if config.tile_servers:
             tile_size = config.tile_servers[0].tile_size
@@ -131,7 +131,7 @@ async def export_coco(
     config = load_config()
 
     # Find tile server for tile size
-    tile_size = 512
+    tile_size = 256
     if tile_server_id:
         for server in config.tile_servers:
             if server.id == tile_server_id:
@@ -266,8 +266,20 @@ async def download_tiles(request: DownloadRequest):
     return EventSourceResponse(generate_events())
 
 
+def get_surrounding_tiles(tile: Tile) -> list[Tile]:
+    """Get 3x3 grid of tiles centered on the given tile."""
+    tiles = []
+    for dx in [-1, 0, 1]:
+        for dy in [-1, 0, 1]:
+            tiles.append(Tile(x=tile.x + dx, y=tile.y + dy, z=tile.z))
+    return tiles
+
+
 @router.get("/download-labeled-tiles")
-async def download_labeled_tiles(tile_server_id: str):
+async def download_labeled_tiles(
+    tile_server_id: str,
+    include_surrounding: bool = Query(False, description="Include surrounding tiles (3x3 grid) for sliding window"),
+):
     """Download only tiles that have labels with SSE progress."""
     config = load_config()
     gdf = load_labels()
@@ -292,10 +304,20 @@ async def download_labeled_tiles(tile_server_id: str):
 
     # Get unique labeled tiles
     unique_tiles = gdf[["tile_z", "tile_x", "tile_y"]].drop_duplicates()
-    tiles = [
+    labeled_tiles = [
         Tile(x=int(row["tile_x"]), y=int(row["tile_y"]), z=int(row["tile_z"]))
         for _, row in unique_tiles.iterrows()
     ]
+
+    # Optionally include surrounding tiles for sliding window
+    if include_surrounding:
+        all_tiles_set = set()
+        for tile in labeled_tiles:
+            for surrounding in get_surrounding_tiles(tile):
+                all_tiles_set.add((surrounding.z, surrounding.x, surrounding.y))
+        tiles = [Tile(x=x, y=y, z=z) for z, x, y in all_tiles_set]
+    else:
+        tiles = labeled_tiles
 
     output_dir = TILES_DIR / tile_server.id
 

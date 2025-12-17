@@ -32,6 +32,10 @@ frontend: ## Start frontend dev server only
 	@echo "Starting frontend dev server on http://localhost:5173"
 	cd frontend && pnpm run dev
 
+sliding-window: ## Generate sliding window training data (usage: make sliding-window STRIDE=256 [ID=tile-server-id])
+	@if [ -z "$(STRIDE)" ]; then echo "Error: STRIDE is required (e.g., make sliding-window STRIDE=256)"; exit 1; fi
+	cd backend && uv run sliding_window.py --stride $(STRIDE) $(if $(ID),--tile-server-id $(ID),)
+
 clean: ## Clean build artifacts and dependencies
 	@echo "Cleaning backend..."
 	cd backend && rm -rf .venv __pycache__ .pytest_cache

@@ -96,6 +96,7 @@ If you need custom tile servers for various data formats, here are some options:
 - `make backend` - Start backend server only
 - `make frontend` - Start frontend dev server only
 - `make clean` - Clean build artifacts and dependencies
+- `make sliding-window STRIDE=N [ID=server-id]` - Generate sliding window training data
 - `make help` - Show all available commands
 
 ## Scope
@@ -133,7 +134,7 @@ Click **Config** to add tile servers. Each server needs:
 
 - **Name**: Display name
 - **URL template**: Tile URL with `{z}/{x}/{y}` placeholders
-- **Tile size**: 512 (default) or 256 for OSM
+- **Tile size**: 256 (default) or 512 for Earthscale tile servers
 
 Example URL: `https://tile.server.com/tiles/{z}/{x}/{y}.png`
 
@@ -175,6 +176,27 @@ Click **Export** to:
 - **Export COCO JSON**: Download in COCO format for ML training
 - **Download Labeled Tiles**: Download tile images for labeled tiles only
 - **Download All Tiles**: Download all tiles in the labeling extent
+
+### 7. Sliding Window Augmentation (Optional)
+
+After exporting tiles and COCO annotations, you can generate additional training data using the sliding window script. This creates new images by sliding a window across neighboring tiles at a configurable stride, effectively augmenting your dataset with shifted views of the same annotations.
+
+```bash
+# Generate sliding windows with 128px stride (50% overlap for 256px tiles)
+make sliding-window STRIDE=128
+
+# Specify a tile server ID if you have multiple
+make sliding-window STRIDE=128 ID=my-tile-server
+```
+
+The script:
+
+- Copies all original labeled tiles to `data/sliding_windows/`
+- Creates new composite images by combining portions of neighboring tiles at each offset
+- Translates and clips bounding box annotations to match the new window positions
+- Outputs a combined COCO annotations file with all images (original + augmented)
+
+Windows are only generated when all required neighboring tiles exist and at least one annotation is visible in the window.
 
 ## Data Storage
 

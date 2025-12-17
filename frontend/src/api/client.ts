@@ -185,6 +185,7 @@ export async function getDataDir(): Promise<{ path: string }> {
 
 export function downloadTilesStream(
     tileServerId: string,
+    includeSurrounding: boolean,
     onProgress: (progress: {
         total: number;
         completed: number;
@@ -194,8 +195,12 @@ export function downloadTilesStream(
     onComplete: () => void,
     onError: (error: string) => void
 ): () => void {
+    const params = new URLSearchParams({
+        tile_server_id: tileServerId,
+        include_surrounding: String(includeSurrounding),
+    });
     const eventSource = new EventSource(
-        `${API_BASE}/export/download-labeled-tiles?tile_server_id=${tileServerId}`
+        `${API_BASE}/export/download-labeled-tiles?${params}`
     );
 
     eventSource.addEventListener("progress", (e) => {
