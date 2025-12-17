@@ -20,6 +20,7 @@ export function ExportPanel({
     const [exportingGeoJSON, setExportingGeoJSON] = useState(false);
     const [exportingCOCO, setExportingCOCO] = useState(false);
     const [useGeoBbox, setUseGeoBbox] = useState(true);
+    const [includeSurrounding, setIncludeSurrounding] = useState(false);
 
     const activeServer = tileServers.find((s) => activeLayers.includes(s.id));
 
@@ -98,6 +99,7 @@ export function ExportPanel({
 
         const cleanup = api.downloadTilesStream(
             activeServer.id,
+            includeSurrounding,
             (p) => setProgress(p),
             () => {
                 setDownloading(false);
@@ -219,6 +221,20 @@ export function ExportPanel({
                 ) : (
                     <p className="warning">Enable a tile server layer first</p>
                 )}
+                <div className="export-options">
+                    <label className="checkbox-label">
+                        <input
+                            type="checkbox"
+                            checked={includeSurrounding}
+                            onChange={(e) =>
+                                setIncludeSurrounding(e.target.checked)
+                            }
+                        />
+                        <span>
+                            Include surrounding tiles (for sliding window)
+                        </span>
+                    </label>
+                </div>
                 <div className="export-buttons">
                     <button
                         onClick={handleDownloadImages}

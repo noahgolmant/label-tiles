@@ -172,7 +172,7 @@ function App() {
         const tileServer = config?.tile_servers.find((s) =>
             uiState?.active_layers.includes(s.id)
         );
-        const tileSize = tileServer?.tile_size ?? 512;
+        const tileSize = tileServer?.tile_size ?? 256;
 
         // Convert geo coords to pixel coords within tile
         const px1 = ((minLng - west) / (east - west)) * tileSize;

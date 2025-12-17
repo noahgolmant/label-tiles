@@ -1,12 +1,27 @@
 """Config management for tile servers, noun phrases, and UI state."""
 
 import json
-import uuid
+import re
 from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
+
+
+def sanitize_name_to_id(name: str) -> str:
+    """Convert a name to a valid ID (lowercase, alphanumeric with hyphens)."""
+    # Convert to lowercase
+    id_str = name.lower()
+    # Replace spaces and underscores with hyphens
+    id_str = re.sub(r"[\s_]+", "-", id_str)
+    # Remove non-alphanumeric characters (except hyphens)
+    id_str = re.sub(r"[^a-z0-9-]", "", id_str)
+    # Collapse multiple hyphens
+    id_str = re.sub(r"-+", "-", id_str)
+    # Strip leading/trailing hyphens
+    id_str = id_str.strip("-")
+    return id_str or "tile-server"
 
 router = APIRouter()
 
@@ -18,13 +33,13 @@ UI_STATE_FILE = DATA_DIR / "ui_state.json"
 class TileServer(BaseModel):
     """Tile server configuration."""
 
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = ""
     name: str
     url_template: str
     bounds: list[float] = Field(default=[-180.0, -85.0, 180.0, 85.0])
     min_zoom: int = 0
     max_zoom: int = 22
-    tile_size: int = 512
+    tile_size: int = 256
 
 
 class Config(BaseModel):
@@ -118,7 +133,15 @@ async def add_tile_server(server: TileServer):
     """Add a new tile server."""
     config = load_config()
     if not server.id:
-        server.id = str(uuid.uuid4())
+        # Generate ID from sanitized name
+        base_id = sanitize_name_to_id(server.name)
+        server.id = base_id
+        # Ensure uniqueness by adding suffix if needed
+        existing_ids = {s.id for s in config.tile_servers}
+        counter = 1
+        while server.id in existing_ids:
+            server.id = f"{base_id}-{counter}"
+            counter += 1
     config.tile_servers.append(server)
     save_config(config)
     return server
